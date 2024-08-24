@@ -1,0 +1,26 @@
+{
+  "title": "Home título 2",
+  "parentLayout": "COLUMN",
+  "sections": [
+    {
+      "type": "TEXT",
+      "text": "teste de texto 1"
+    },
+    {
+      "type": "TEXT",
+      "text": "teste de texto 2"
+    },
+    {
+      "type": "BUTTON",
+      "content": "botao 1"
+    },
+    {
+      "type": "BUTTON",
+      "content": "botao 2"
+    },
+    {
+      "type": "BUTTON",
+      "content": "botao 3"
+    }
+  ]
+}
