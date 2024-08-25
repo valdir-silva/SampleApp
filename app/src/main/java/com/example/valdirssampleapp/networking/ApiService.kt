@@ -1,8 +1,8 @@
 package com.example.valdirssampleapp.networking
 
 import android.content.Context
+import co.infinum.retromock.BodyFactory
 import co.infinum.retromock.Retromock
-import com.example.valdirssampleapp.networking.NetworkConstant.TIMEOUT
 import com.example.valdirssampleapp.networking.data.response.sections.SectionResponse
 import com.example.valdirssampleapp.sdui.CustomPolymorphicJsonAdapterFactory
 import com.example.valdirssampleapp.sdui.SectionTypes
@@ -12,18 +12,23 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.IOException
+import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
 
 // TODO pensar em como passar a implementação para o koin e deletar essa classe
-object ApiService {
-    lateinit var apiEndpoints: ApiEndpoints
-    lateinit var mockSampleNetworkingImpl: MockSampleNetworkingImpl
+class ApiService(context: Context) {
+    var apiEndpoints: SampleNetworking
+    var mockSampleNetworking: MockSampleNetworking
 
-    private lateinit var retrofit: Retrofit
+    private var retrofit: Retrofit
     var jsonPath = "homeSections.json"
 
-    fun init(context: Context) {
+    val BASE_URL = "https://api.example.com"
+    val TIMEOUT: Long = 30
+
+    init {
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -58,11 +63,11 @@ object ApiService {
         val retromock: Retromock = Retromock.Builder()
             .retrofit(retrofit)
             .defaultBodyFactory(assetManager::open)
-            .addBodyFactory(CustomBuildBodyFactory(context))
+            .addBodyFactory(CustomBuildBodyFactory(context = context, apiService = this))
             .build()
 
-        apiEndpoints = retrofit.create(ApiEndpoints::class.java)
-        mockSampleNetworkingImpl = retromock.create(MockSampleNetworkingImpl::class.java)
+        apiEndpoints = retrofit.create(SampleNetworking::class.java)
+        mockSampleNetworking = retromock.create(MockSampleNetworking::class.java)
     }
 
     fun recreateRetroMock(context: Context, jsonPath: String) {
@@ -70,9 +75,18 @@ object ApiService {
         val retromock: Retromock = Retromock.Builder()
             .retrofit(retrofit)
             .defaultBodyFactory(context.assets::open)
-            .addBodyFactory(CustomBuildBodyFactory(context))
+            .addBodyFactory(CustomBuildBodyFactory(context = context, apiService = this))
             .build()
-        mockSampleNetworkingImpl = retromock.create(MockSampleNetworkingImpl::class.java)
+        mockSampleNetworking = retromock.create(MockSampleNetworking::class.java)
     }
 //        val service: MockEndpoints = init().create(MockEndpoints::class.java)
+}
+
+
+internal class CustomBuildBodyFactory(private val context: Context, private val apiService: ApiService) : BodyFactory {
+    @Throws(IOException::class)
+    override fun create(input: String): InputStream {
+        val inputStream = context.assets.open(apiService.jsonPath)
+        return inputStream
+    }
 }

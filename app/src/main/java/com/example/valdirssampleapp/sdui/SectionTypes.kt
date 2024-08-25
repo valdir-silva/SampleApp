@@ -9,8 +9,4 @@ object SectionTypes {
         "text" to TextSectionResponse::class,
         "button" to ButtonSectionResponse::class,
     )
-
-    inline fun <reified T> getSectionType(label: String): Class<T>? {
-        return SECTION_TYPES[label.lowercase()] as? Class<T>
-    }
 }

@@ -2,41 +2,60 @@ package com.example.valdirssampleapp.ui.userList
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.valdirssampleapp.networking.data.response.sections.ButtonSectionResponse
 import com.example.valdirssampleapp.networking.data.response.sections.SectionResponse
 import com.example.valdirssampleapp.networking.data.response.sections.SectionsResponse
 import com.example.valdirssampleapp.networking.data.response.sections.TextSectionResponse
+import com.example.valdirssampleapp.ui.sections.ButtonSection
+import com.example.valdirssampleapp.ui.sections.TextSection
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("Range")
 @Composable
-fun UserListScreen(
+fun HomeScreen(
     modifier: Modifier = Modifier,
-    userViewModel: UserViewModel = viewModel()
+    homeViewModel: HomeViewModel = koinViewModel()
 ) {
     Column {
         Column(modifier = modifier.fillMaxHeight(10f)) {
-            val sectionsList by userViewModel.sectionsList.observeAsState()
+            val isLoading by homeViewModel.isLoading.collectAsState()
+            val sectionsList by homeViewModel.sectionsList.observeAsState()
+
+            Box(modifier = modifier.fillMaxSize()) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                } else {
+                    sectionsList?.let { SectionsList(sections = it) }
+                }
+            }
             sectionsList?.let { SectionsList(sections = it) }
         }
     }
 }
 
+// TODO tirar daqui
 @Composable
 fun SetSectionsView(section: SectionResponse) {
     when (section) {

@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.moshi.kotlin.codegen)
     implementation (libs.moshi.adapters)
     implementation(libs.androidx.navigation.compose)
+    implementation (libs.koin.androidx.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
