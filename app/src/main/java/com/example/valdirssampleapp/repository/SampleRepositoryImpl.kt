@@ -1,6 +1,8 @@
 package com.example.valdirssampleapp.repository
 
 import com.example.valdirssampleapp.domain.SampleResult
+import com.example.valdirssampleapp.domain.models.SectionsModel
+import com.example.valdirssampleapp.domain.toModel
 import com.example.valdirssampleapp.networking.ApiService
 import com.example.valdirssampleapp.networking.ISampleNetworking
 import com.example.valdirssampleapp.networking.data.response.sections.SectionsResponse
@@ -14,13 +16,13 @@ class SampleRepositoryImpl(apiService: ApiService) : SampleRepository {
     // TODO ajustar para ficar com menos acoplamento
     private val service: ISampleNetworking = apiService.mockSampleNetworking
 
-    override suspend fun getSections(): SampleResult<SectionsResponse> = run {
+    override suspend fun getSections(): SampleResult<SectionsModel> = run {
         try {
             val response = service.getSections()
             if (response.isSuccessful) {
                 val sections: SectionsResponse? = response.body()
                 if (sections != null) {
-                    return SampleResult.Success(sections)
+                    return SampleResult.Success(sections.toModel())
                 } else {
                     return SampleResult.Failure(Throwable(response.code().toString()))
                 }

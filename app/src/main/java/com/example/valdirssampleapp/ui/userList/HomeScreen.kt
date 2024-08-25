@@ -22,10 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.valdirssampleapp.networking.data.response.sections.ButtonSectionResponse
-import com.example.valdirssampleapp.networking.data.response.sections.SectionResponse
-import com.example.valdirssampleapp.networking.data.response.sections.SectionsResponse
-import com.example.valdirssampleapp.networking.data.response.sections.TextSectionResponse
+import com.example.valdirssampleapp.domain.models.ButtonSectionModel
+import com.example.valdirssampleapp.domain.models.SectionModel
+import com.example.valdirssampleapp.domain.models.SectionsModel
+import com.example.valdirssampleapp.domain.models.TextSectionModel
 import com.example.valdirssampleapp.ui.sections.ButtonSection
 import com.example.valdirssampleapp.ui.sections.TextSection
 import org.koin.androidx.compose.koinViewModel
@@ -57,15 +57,15 @@ fun HomeScreen(
 
 // TODO tirar daqui
 @Composable
-fun SetSectionsView(section: SectionResponse) {
+fun SetSectionsView(section: SectionModel) {
     when (section) {
-        is TextSectionResponse -> {
+        is TextSectionModel -> {
             TextSection(
                 text = section.text
             )
         }
 
-        is ButtonSectionResponse -> {
+        is ButtonSectionModel -> {
             ButtonSection(
                 text = section.content
             ) {
@@ -77,7 +77,7 @@ fun SetSectionsView(section: SectionResponse) {
 
 @Composable
 fun SectionsList(
-    sections: SectionsResponse,
+    sections: SectionsModel,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(

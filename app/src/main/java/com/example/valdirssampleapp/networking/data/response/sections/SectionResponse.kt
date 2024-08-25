@@ -1,3 +1,8 @@
 package com.example.valdirssampleapp.networking.data.response.sections
 
-sealed class SectionResponse(val type: String)
+import com.squareup.moshi.Json
+
+sealed class SectionResponse(
+    @Json(name = "type")
+    val type: String
+)

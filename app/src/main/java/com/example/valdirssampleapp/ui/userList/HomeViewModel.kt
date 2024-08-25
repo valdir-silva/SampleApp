@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 // TODO criar useCase que chama o repository e colocar a dependencia do useCase aqui
 class HomeViewModel(private val getHomeUseCase: GetHomeUseCase) : ViewModel() {
 
-    private val _sectionsList = MutableLiveData<SectionsResponse>()
-    open val sectionsList: LiveData<SectionsResponse>
+    private val _sectionsList = MutableLiveData<SectionsModel>()
+    open val sectionsList: LiveData<SectionsModel>
         get() = _sectionsList
 
     private val _isLoading = MutableStateFlow(true)
