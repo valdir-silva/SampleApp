@@ -1,6 +1,5 @@
-package com.example.valdirssampleapp.ui.userList
+package com.example.valdirssampleapp.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,10 +7,8 @@ import com.example.valdirssampleapp.domain.getHome.GetHomeUseCase
 import com.example.valdirssampleapp.domain.models.SectionsModel
 import com.example.valdirssampleapp.domain.onResultFailure
 import com.example.valdirssampleapp.domain.onResultSuccess
-import com.example.valdirssampleapp.networking.data.response.sections.SectionsResponse
-import com.example.valdirssampleapp.repository.SampleRepository
+import com.example.valdirssampleapp.utils.toLiveData
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -19,11 +16,10 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val getHomeUseCase: GetHomeUseCase) : ViewModel() {
 
     private val _sectionsList = MutableLiveData<SectionsModel>()
-    open val sectionsList: LiveData<SectionsModel>
-        get() = _sectionsList
+    val sectionsList = _sectionsList.toLiveData()
 
     private val _isLoading = MutableStateFlow(true)
-    open val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    val isLoading = _isLoading.asStateFlow()
 
     init {
         fetchData()

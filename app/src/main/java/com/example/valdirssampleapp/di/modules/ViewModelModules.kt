@@ -1,7 +1,7 @@
 package com.example.valdirssampleapp.di.modules
 
 import com.example.valdirssampleapp.ui.mockSelection.MockViewModel
-import com.example.valdirssampleapp.ui.userList.HomeViewModel
+import com.example.valdirssampleapp.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

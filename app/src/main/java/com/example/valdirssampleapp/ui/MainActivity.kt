@@ -13,7 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.valdirssampleapp.networking.ApiService
 import com.example.valdirssampleapp.ui.mockSelection.MockSelectionScreen
 import com.example.valdirssampleapp.ui.theme.ServerDrivenUISampleTheme
-import com.example.valdirssampleapp.ui.userList.HomeScreen
+import com.example.valdirssampleapp.ui.home.HomeScreen
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {

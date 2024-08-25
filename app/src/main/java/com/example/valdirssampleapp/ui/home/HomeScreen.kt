@@ -1,4 +1,4 @@
-package com.example.valdirssampleapp.ui.userList
+package com.example.valdirssampleapp.ui.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
