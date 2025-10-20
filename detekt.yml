@@ -1,0 +1,9 @@
+build:
+  maxIssues: 10
+
+autoCorrect: true
+
+style:
+  MaxLineLength:
+    maxLineLength: 120
+
