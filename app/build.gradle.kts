@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.detekt)
     id("com.google.devtools.ksp").version("1.6.10-1.0.4")
 }
 
